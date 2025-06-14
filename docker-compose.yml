@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Docker/php/Dockerfile
+    container_name: siroko_php
+    volumes:
+      - .:/app
+      - ~/.composer:/root/.composer
+    working_dir: /app
+    depends_on:
+      - postgres
+    networks:
+      - siroko
+    expose:
+      - "9000"
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: siroko_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/app
+      - ./Docker/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - php
+    networks:
+      - siroko
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: siroko_postgres
+    environment:
+      POSTGRES_DB: siroko
+      POSTGRES_USER: siroko
+      POSTGRES_PASSWORD: siroko
+    ports:
+      - "5432:5432"
+    networks:
+      - siroko
+
+networks:
+  siroko:
+    driver: bridge
