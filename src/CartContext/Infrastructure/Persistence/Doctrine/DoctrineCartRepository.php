@@ -19,19 +19,27 @@ class DoctrineCartRepository implements CartRepositoryInterface
     ) {}
 
     public function save(DomainCart $cart): void
-    {
+{
+    $entity = $this->em->getRepository(DoctrineCart::class)->find($cart->id());
+
+    if (!$entity) {
         $entity = new DoctrineCart($cart->id());
-
-        foreach ($cart->items() as $item) {
-            $entity->addItem(new DoctrineCartItem(
-                (string) $item->productId(),
-                $item->quantity()
-            ));
+    } else {
+        foreach ($entity->getItems() as $existing) {
+            $entity->removeItem($existing);
         }
-
-        $this->em->persist($entity);
-        $this->em->flush();
     }
+
+    foreach ($cart->items() as $item) {
+        $entity->addItem(new DoctrineCartItem(
+            (string) $item->productId(),
+            $item->quantity()
+        ));
+    }
+
+    $this->em->persist($entity);
+    $this->em->flush();
+}
 
     public function getById(string $id): DomainCart
     {
