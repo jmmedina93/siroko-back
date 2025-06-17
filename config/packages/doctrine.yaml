@@ -24,6 +24,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/CartContext/Infrastructure/Persistence/Doctrine/Entity'
                 prefix: 'App\CartContext\Infrastructure\Persistence\Doctrine\Entity'
                 alias: CartContext
+            OrderContext:
+                is_bundle: false
+                type: attribute
+                dir: '%kernel.project_dir%/src/OrderContext/Infrastructure/Persistence/Doctrine/Entity'
+                prefix: 'App\OrderContext\Infrastructure\Persistence\Doctrine\Entity'
+                alias: OrderContext
         controller_resolver:
             auto_mapping: false
 
