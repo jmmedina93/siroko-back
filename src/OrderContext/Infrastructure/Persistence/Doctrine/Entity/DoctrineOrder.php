@@ -36,4 +36,27 @@ class DoctrineOrder
         $item->setOrder($this);
         $this->items->add($item);
     }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function getCartId(): string
+    {
+        return $this->cartId;
+    }
+
+    public function getCreatedAt(): \DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return DoctrineOrderItem[]
+     */
+    public function getItems(): iterable
+    {
+        return $this->items;
+    }
 }

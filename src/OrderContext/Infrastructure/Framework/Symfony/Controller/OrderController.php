@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use App\OrderContext\Application\Query\GetOrderQuery;
+use App\OrderContext\Application\Query\GetOrderHandler;
 
 class OrderController extends AbstractController
 {
@@ -33,6 +35,18 @@ class OrderController extends AbstractController
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ], 500);
+        }
+    }
+    #[Route('/api/order/{orderId}', name: 'api_order_get', methods: ['GET'])]
+    public function getOrder(string $orderId, GetOrderHandler $handler): JsonResponse
+    {
+        try {
+            $result = $handler->__invoke(new GetOrderQuery($orderId));
+            return $this->json($result);
+        } catch (\RuntimeException $e) {
+            return $this->json(['error' => $e->getMessage()], 404);
+        } catch (\Throwable $e) {
+            return $this->json(['error' => 'Internal Server Error'], 500);
         }
     }
 }

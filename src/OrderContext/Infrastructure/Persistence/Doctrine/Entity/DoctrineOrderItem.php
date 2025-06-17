@@ -33,4 +33,14 @@ class DoctrineOrderItem
     {
         $this->order = $order;
     }
+
+    public function getProductId(): string
+    {
+        return $this->productId;
+    }
+
+    public function getQuantity(): int
+    {
+        return $this->quantity;
+    }
 }

@@ -6,6 +6,8 @@ use App\OrderContext\Domain\Entity\Order as DomainOrder;
 use App\OrderContext\Domain\Repository\OrderRepositoryInterface;
 use App\OrderContext\Infrastructure\Persistence\Doctrine\Entity\DoctrineOrder;
 use App\OrderContext\Infrastructure\Persistence\Doctrine\Entity\DoctrineOrderItem;
+use App\CartContext\Domain\ValueObject\ProductId;
+use App\OrderContext\Domain\ValueObject\OrderItem;
 use Doctrine\ORM\EntityManagerInterface;
 
 class DoctrineOrderRepository implements OrderRepositoryInterface
@@ -27,5 +29,30 @@ class DoctrineOrderRepository implements OrderRepositoryInterface
 
         $this->em->persist($entity);
         $this->em->flush();
+    }
+
+    public function getById(string $orderId): ?DomainOrder
+    {
+        /** @var DoctrineOrder|null $entity */
+        $entity = $this->em->getRepository(DoctrineOrder::class)->find($orderId);
+
+        if (!$entity) {
+            return null;
+        }
+
+        $items = [];
+        foreach ($entity->getItems() as $item) {
+            $items[] = new OrderItem(
+                new ProductId($item->getProductId()),
+                $item->getQuantity()
+            );
+        }
+
+        return new DomainOrder(
+            $entity->getId(),
+            $entity->getCartId(),
+            $items,
+            $entity->getCreatedAt()
+        );
     }
 }
