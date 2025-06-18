@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\CartContext\Domain\ValueObject;
+namespace App\Tests\Units\CartContext\Domain\ValueObject;
 
 use App\CartContext\Domain\ValueObject\ProductId;
 use PHPUnit\Framework\TestCase;

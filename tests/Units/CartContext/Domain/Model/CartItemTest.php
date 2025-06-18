@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\CartContext\Domain\Model;
+namespace App\Tests\Units\CartContext\Domain\Model;
 
 use App\CartContext\Domain\Model\CartItem;
 use App\CartContext\Domain\ValueObject\ProductId;
