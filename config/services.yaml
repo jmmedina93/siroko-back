@@ -7,3 +7,5 @@ services:
 
     App\CartContext\Domain\Repository\CartRepositoryInterface:
         alias: App\CartContext\Infrastructure\Persistence\Doctrine\DoctrineCartRepository
+    App\OrderContext\Domain\Repository\OrderRepositoryInterface:
+        alias: App\OrderContext\Infrastructure\Persistence\Doctrine\DoctrineOrderRepository

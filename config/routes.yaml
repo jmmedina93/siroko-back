@@ -1,3 +1,7 @@
 cart_context_controllers:
     resource: '../src/CartContext/Infrastructure/Framework/Symfony/Controller/'
     type: attribute
+
+order_context:
+    resource: '../src/OrderContext/Infrastructure/Framework/Symfony/Controller/'
+    type: attribute
