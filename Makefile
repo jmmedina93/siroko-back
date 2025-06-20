@@ -1,3 +1,6 @@
+DOCKER_EXEC = docker exec
+DOCKER_PHP := siroko_php
+
 up:
 	docker compose up -d --build
 
@@ -5,16 +8,16 @@ down:
 	docker compose down
 
 bash:
-	docker exec -it siroko_php bash
+	${DOCKER_EXEC} -it ${DOCKER_PHP} bash
 
 composer-install:
-	docker exec -it siroko_php composer install
-
-symfony:
-	docker exec -it siroko_php symfony serve -d
+	${DOCKER_EXEC} -it ${DOCKER_PHP} composer install
 
 console:
-	docker exec -it siroko_php php bin/console
+	${DOCKER_EXEC} -it ${DOCKER_PHP} php bin/console
 
 test:
-	docker exec -it siroko_php php bin/phpunit
+	${DOCKER_EXEC} -it ${DOCKER_PHP} php bin/phpunit
+
+migrations:
+	${DOCKER_EXEC} -it ${DOCKER_BE} php bin/console d:m:m
