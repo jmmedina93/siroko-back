@@ -86,7 +86,8 @@ make test
 ## Documentación OpenAPI
 
 Incluye especificación OpenAPI para importar en Postman o Swagger.  
-(Archivo openapi.yaml en la raíz)
+- [Ver archivo openapi.yaml](./Resources/openapi.yaml) 
+- [Abrir en Swagger Editor](https://editor.swagger.io/?url=https://raw.githubusercontent.com/jmmedina93/siroko-carrito-checkout/main/openapi.yaml)
 
 ---
 
