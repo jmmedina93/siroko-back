@@ -98,6 +98,18 @@ Incluye especificación OpenAPI para importar en Postman o Swagger.
 
 ---
 
+### Cosas a mejorar en una v2
+
+- Añadir mas cobertura de test
+- Una interfaz grafica (desacoplada al proyecto)
+- Introducir NelmioApiDoc para tener swagger directamente incluido en nuestro proyecto
+- Gestion de usuarios
+- Reemplazo de productos simulados por catálogo real en base de datos
+- Guardado automático del carrito en sesión o token temporal
+- Análisis estático para mejorar calidad de código como puede ser PhpStan y CSFixer
+
+---
+
 ### Autor
 
 Juan Martínez  
