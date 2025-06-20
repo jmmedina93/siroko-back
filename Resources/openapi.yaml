@@ -1,0 +1,183 @@
+openapi: 3.1.0
+info:
+  title: Siroko Cart & Checkout API
+  description: API REST para gestionar el carrito de compra y el checkout en Siroko.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+
+paths:
+  /api/cart/add:
+    post:
+      summary: Añadir producto al carrito
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: string
+                quantity:
+                  type: integer
+              required:
+                - productId
+                - quantity
+      responses:
+        '200':
+          description: Carrito actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+
+  /api/cart/update:
+    put:
+      summary: Actualizar cantidad de un producto en el carrito
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cartId:
+                  type: string
+                productId:
+                  type: string
+                quantity:
+                  type: integer
+              required:
+                - cartId
+                - productId
+                - quantity
+      responses:
+        '200':
+          description: Carrito actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+
+  /api/cart/remove:
+    delete:
+      summary: Eliminar producto del carrito
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cartId:
+                  type: string
+                productId:
+                  type: string
+              required:
+                - cartId
+                - productId
+      responses:
+        '200':
+          description: Producto eliminado del carrito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+
+  /api/cart/{cartId}:
+    get:
+      summary: Obtener carrito
+      parameters:
+        - in: path
+          name: cartId
+          schema:
+            type: string
+          required: true
+          description: ID del carrito
+      responses:
+        '200':
+          description: Carrito actual
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+
+  /api/order/checkout:
+    post:
+      summary: Procesar pago y generar orden
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cartId:
+                  type: string
+              required:
+                - cartId
+      responses:
+        '200':
+          description: Orden creada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orderId:
+                    type: string
+
+  /api/order/{orderId}:
+    get:
+      summary: Obtener detalles de la orden
+      parameters:
+        - in: path
+          name: orderId
+          schema:
+            type: string
+          required: true
+          description: ID de la orden
+      responses:
+        '200':
+          description: Detalles de la orden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        cartId:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItem'
+
+    CartItem:
+      type: object
+      properties:
+        productId:
+          type: string
+        quantity:
+          type: integer
+
+    Order:
+      type: object
+      properties:
+        orderId:
+          type: string
+        cartId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItem'
